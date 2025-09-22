@@ -1,5 +1,5 @@
-#ifndef SAU_BYTE_ARRAY_INPUT_STREAM_HPP
-#define SAU_BYTE_ARRAY_INPUT_STREAM_HPP
+#ifndef SAU_BYTE_ARRAY_STREAM_HPP
+#define SAU_BYTE_ARRAY_STREAM_HPP
 
 #include <cstring>
 #if defined(_WIN32) || defined(_WIN64)
@@ -32,4 +32,4 @@ namespace sau {
 
 } // namespace sau
 
-#endif // SAU_BYTE_ARRAY_INPUT_STREAM_HPP
+#endif // SAU_BYTE_ARRAY_STREAM_HPP
