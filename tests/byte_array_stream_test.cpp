@@ -32,3 +32,13 @@ TEST(ByteArrayInputStream, readByte) {
 
   EXPECT_EQ(stream.readByte(), 0);
 }
+
+TEST(ByteArrayOutputStream, write) {
+  std::vector<std::uint8_t> writeBuffer(10);
+  sau::ByteArrayOutputStream stream(writeBuffer);
+  std::vector<std::uint8_t> dataToWrite = { 0, 1, 2, 3, 4 };
+  std::vector<std::uint8_t> expected = { 0, 1, 2, 3, 4, 0, 0, 0, 0, 0 };
+  std::size_t bytesWritten = stream.write(dataToWrite);
+  EXPECT_EQ(bytesWritten, 5);
+  EXPECT_EQ(writeBuffer, expected);
+}

@@ -21,6 +21,8 @@ namespace sau {
       return m_position;
     }
 
+    [[nodiscard]] virtual bool eof() const = 0;
+
   private:
     SeekableStream(const SeekableStream&) = delete;
     SeekableStream& operator=(const SeekableStream&) = delete;

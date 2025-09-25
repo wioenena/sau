@@ -12,4 +12,15 @@ namespace sau {
     m_position += bytesToRead;
     return bytesToRead;
   }
+
+
+  [[nodiscard]] std::size_t ByteArrayOutputStream::write(const std::uint8_t* buffer, std::size_t size) {
+    if (eof())
+      return 0;
+
+    const std::size_t bytesToWrite = std::min(size, m_buffer.size() - m_position);
+    std::memcpy(m_buffer.data() + m_position, buffer, bytesToWrite);
+    m_position += bytesToWrite;
+    return bytesToWrite;
+  }
 } // namespace sau

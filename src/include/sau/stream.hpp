@@ -28,11 +28,11 @@ namespace sau {
 
     [[nodiscard]] virtual std::size_t read(std::uint8_t* outBuffer, std::size_t size) = 0;
 
-    [[nodiscard]] virtual inline std::size_t read(std::vector<std::uint8_t>& outBuffer) {
+    [[nodiscard]] inline std::size_t read(std::vector<std::uint8_t>& outBuffer) {
       return read(outBuffer.data(), outBuffer.size());
     }
 
-    [[nodiscard]] virtual inline std::size_t read(const std::span<std::uint8_t> outBuffer) {
+    [[nodiscard]] inline std::size_t read(const std::span<std::uint8_t> outBuffer) {
       return read(outBuffer.data(), outBuffer.size());
     }
 
@@ -44,11 +44,37 @@ namespace sau {
 
       return byte;
     }
-
-    [[nodiscard]] virtual bool eof() const = 0;
   };
 
-  class OutputStream {};
+  class OutputStream {
+  private:
+    OutputStream(const OutputStream&) = delete;
+    OutputStream& operator=(const OutputStream&) = delete;
+    OutputStream(OutputStream&&) = delete;
+    OutputStream& operator=(OutputStream&&) = delete;
+
+  protected:
+    OutputStream() = default;
+
+  public:
+    virtual ~OutputStream() = default;
+
+    [[nodiscard]] virtual std::size_t write(const std::uint8_t* buffer, std::size_t size) = 0;
+
+    [[nodiscard]] inline std::size_t write(const std::vector<std::uint8_t>& buffer) {
+      return write(buffer.data(), buffer.size());
+    }
+
+    [[nodiscard]] inline std::size_t write(const std::span<const std::uint8_t> buffer) {
+      return write(buffer.data(), buffer.size());
+    }
+
+    inline void writeByte(std::uint8_t byte) {
+      if (write(&byte, 1) != 1) {
+        throw std::runtime_error("Failed to write byte");
+      }
+    }
+  };
 } // namespace sau
 
 #endif // SAU_INPUT_STREAM_HPP
